@@ -293,7 +293,7 @@ const callData = [
                     iconClass={styles.iconBlue}
                     title="Visualised"
                 >
-                    <Grid gutter="md">
+                    <Grid style={{ gap: '16px' }}>
 
                         {/* Media Distribution — Pie */}
                         <Grid.Col span={{ base: 12, md: 6 }}>
