@@ -1,0 +1,199 @@
+/* ── shell ── */
+.modalShell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: transparent;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ── decorative background shapes ── */
+.modalShell::before {
+    content: '';
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    top: -120px;
+    right: -80px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.modalShell::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,92,246,0.07) 0%, transparent 70%);
+    bottom: -60px;
+    left: -60px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* extra decorative ring — top left */
+.decorRing {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.04);
+    top: 60px;
+    left: -60px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* extra blob — bottom right */
+.decorBlob {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(20,184,166,0.06) 0%, transparent 70%);
+    bottom: 80px;
+    right: -40px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── top bar — frosted glass ── */
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.topBarLeft {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.topBarDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3b82f6;
+    box-shadow: 0 0 8px #3b82f6;
+}
+
+.topBarTitle {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+}
+
+.closeBtn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.45);
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.closeBtn:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+/* ── tabs ── */
+.tabs {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+
+.tabList {
+    display: flex !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    background: var(--paragraph)!important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0 16px;
+    flex-shrink: 0;
+    gap: 4px;
+}
+
+.tab {
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255,255,255,0.4) !important;
+    padding: 10px 14px !important;
+    border-radius: 0 !important;
+    border-bottom: 2px solid transparent !important;
+    transition: color 0.2s, border-color 0.2s !important;
+    font-size: 0.82rem !important;
+}
+
+.tab:hover {
+    color: rgba(255,255,255,0.75) !important;
+    background: rgba(255,255,255,0.04) !important;
+}
+
+.tab[data-active] {
+    color: #ffffff !important;
+    border-bottom-color: #3b82f6 !important;
+    background: transparent !important;
+}
+
+.tabInner {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tabBadge {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.55);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+}
+
+.tab[data-active] .tabBadge {
+    background: rgba(59,130,246,0.25);
+    color: #93c5fd;
+}
+
+/* ── panel ── */
+.tabPanel {
+    flex: 1;
+    overflow-y: auto;
+    
+    min-height: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.tabPanel::-webkit-scrollbar        { width: 4px; }
+.tabPanel::-webkit-scrollbar-track  { background: transparent; }
+.tabPanel::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.08); border-radius: 999px; }

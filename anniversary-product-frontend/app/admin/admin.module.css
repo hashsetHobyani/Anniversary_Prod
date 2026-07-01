@@ -1,0 +1,259 @@
+/* ═══════════════════════════════════════════
+   Admin Dashboard — full-screen glass theme
+   ═══════════════════════════════════════════ */
+
+.container {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    overflow-y: auto;
+}
+
+.inner {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* ── Header ── */
+.header {
+    margin-bottom: 40px;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin: 0 0 6px;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+}
+
+/* ── Cards ── */
+.card {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 18px;
+    padding: 32px 36px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* top accent line */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 18px 18px 0 0;
+}
+.cardImport::before { background: linear-gradient(90deg, #6366f1, #a5b4fc); }
+.cardClear::before  { background: linear-gradient(90deg, #f59e0b, #fde68a); }
+.cardDelete::before { background: linear-gradient(90deg, #ef4444, #fca5a5); }
+
+/* ── Card head ── */
+.cardHead {
+    margin-bottom: 24px;
+}
+
+
+.usedFilesRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.usedFile {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--paragraph);
+    border-radius: 999px;
+    padding: 3px 10px 3px 8px;
+    backdrop-filter: blur(4px);
+
+}
+
+.fileText {
+    font-size: 0.75rem;
+    color: var(--paragraph);
+    white-space: nowrap;
+    margin: 0;
+}
+
+.fileDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3b82f6;
+    flex-shrink: 0;
+}
+.pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+}
+.pillBlue  { background: rgba(99,102,241,0.2);  color: #a5b4fc; border: 1px solid rgba(99,102,241,0.35); }
+.pillAmber { background: rgba(245,158,11,0.18); color: #fde68a; border: 1px solid rgba(245,158,11,0.35); }
+.pillRed   { background: rgba(239,68,68,0.18);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.35); }
+
+.cardDesc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.38);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ── Fields ── */
+.fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fieldLabel {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.01em;
+}
+
+/* Native select */
+.select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.06) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 15px;
+    padding: 13px 40px 13px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    outline: none;
+    width: 100%;
+}
+.select:focus { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.1); }
+.select option { background: #1e2130; color: #fff; }
+
+/* Native text input */
+.input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 15px;
+    padding: 13px 16px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.15s, background 0.15s;
+}
+.input::placeholder { color: rgba(255,255,255,0.25); }
+.input:focus { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.1); }
+
+/* File input */
+.fileLabel {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    gap: 10px;
+    overflow: hidden;
+}
+.fileLabel:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.09); }
+
+.fileInput {
+    display: none;
+}
+
+.fileText {
+    flex: 1;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fileBrowse {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 4px 10px;
+    letter-spacing: 0.02em;
+}
+
+/* ── Actions ── */
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:not(:disabled):hover { opacity: 0.88; transform: translateY(-1px); }
+.btn:not(:disabled):active { transform: translateY(0); }
+
+.btnBlue  { background: #6366f1; color: #fff; }
+.btnAmber { background: #d97706; color: #fff; }
+.btnRed   { background: #dc2626; color: #fff; }
+.btnGhost {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+.btnGhost:not(:disabled):hover { background: rgba(255,255,255,0.14); opacity: 1; }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .inner { padding: 28px 16px 60px; }
+    .card  { padding: 24px 20px; }
+    .fields { grid-template-columns: 1fr; }
+    .title { font-size: 24px; }
+}

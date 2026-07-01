@@ -1,0 +1,136 @@
+.alertWrapper {
+    position: relative;
+    display: flex;
+    justify-content: flex-end; /* pushes alert to right */
+    width: 100%;
+    padding: 2rem 24px;
+    margin-bottom: 10px;
+
+}
+
+/* main card */
+.alert {
+    background: #ffffff;
+    border: 1px solid #e6e9ff;
+    border-left: 4px solid #5c6ef8;
+    border-radius: 14px;
+
+    padding: 14px;
+    width: 100vw;
+
+    /* IMPORTANT: remove fixed height */
+    height: auto;
+
+    display: flex;
+    gap: 10px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    font-family: Inter, system-ui, sans-serif;
+}
+
+/* icon */
+.iconCol {
+    color: #5c6ef8;
+    margin-top: 2px;
+}
+
+/* text body */
+.body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* top row */
+.topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.heading {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2d3060;
+}
+
+/* close button */
+.closeBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    color: #8b90bf;
+    display: flex;
+    align-items: center;
+
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.closeBtn:hover {
+    background: rgba(92, 110, 248, 0.08);
+    color: #2d3060;
+}
+
+/* content scrollable (important for tall card) */
+.content {
+    font-size: 12.8px;
+    line-height: 1.6;
+    color: #3d4275;
+
+    overflow-y: auto;
+    flex: 1;
+
+    margin: 0;
+    padding-right: 4px;
+}
+
+/* toggle button */
+.toggleBtn {
+    margin-top: 10px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: #5c6ef8;
+    background: rgba(92, 110, 248, 0.08);
+
+    border: 1px solid rgba(92, 110, 248, 0.25);
+    border-radius: 999px;
+
+    padding: 6px 10px;
+
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    width: fit-content;
+}
+
+.toggleBtn:hover {
+    background: rgba(92, 110, 248, 0.15);
+    border-color: rgba(92, 110, 248, 0.4);
+}.floatingAboutBtn {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+
+    background: #111827;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.floatingAboutBtn:hover {
+    transform: scale(1.08);
+}

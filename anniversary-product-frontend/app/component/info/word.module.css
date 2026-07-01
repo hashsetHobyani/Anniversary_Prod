@@ -1,0 +1,270 @@
+/* ══════════════════════════════════════
+   CONTAINER — 3-row stack
+══════════════════════════════════════ */
+.container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: "Georgia", serif;
+    color: #111;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ── ROW 1: GIF banner ── */
+.gifRow {
+    flex: 0 0 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-blush);
+    position: relative;
+    overflow: hidden;
+}
+
+.bgMedia {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.gifOverlay {
+    display: none;
+}
+
+/* ── ROW 2: dictionary + button ── */
+.contentRow {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    background: var(--background-blush);
+    position: relative;
+}
+
+.left {
+    flex: 1;
+    padding: 2.5rem 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* wave letters */
+.wordRow {
+    display: flex;
+    gap: 0;
+    line-height: 1;
+}
+
+.letter {
+    display: inline-block;
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    animation: wave 2.4s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+@keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+}
+
+.phonetic {
+    margin-top: 0.6rem;
+    font-style: italic;
+    font-size: 1rem;
+    opacity: 0.5;
+    letter-spacing: 0.02em;
+}
+
+.divider {
+    width: 100%;
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    margin: 1.2rem 0;
+}
+
+.dividerLight {
+    width: 100%;
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin: 0.8rem 0;
+}
+
+.partOfSpeech {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    opacity: 0.45;
+}
+
+.partOfSpeech::before,
+.partOfSpeech::after {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+}
+
+.definition {
+    font-size: 1.15rem;
+    max-width: 560px;
+    line-height: 1.7;
+    color: #1a1a1a;
+}
+
+.example {
+    font-style: italic;
+    font-size: 0.95rem;
+    opacity: 0.55;
+    max-width: 480px;
+    line-height: 1.6;
+}
+
+/* right panel — button */
+.right {
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
+.navBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    background: transparent;
+    color: #111;
+    font-size: 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        background   0.22s ease,
+        border-color 0.22s ease,
+        transform    0.22s ease;
+}
+
+.navBtn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: #111;
+    transform: scale(1.1);
+}
+
+.navBtnLabel {
+    font-family: var(--font-dms);
+    font-style: italic;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    text-align: center;
+}
+
+/* ── ROW 3: music island bar ── */
+.musicRow {
+    flex: 0 0 72px;
+    background: var(--background-blush, #fdf0f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 0.5rem;
+}
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+
+/* ── tablet (≤ 1024px) ── */
+@media (max-width: 1024px) {
+
+    .gifRow {
+        flex: 0 0 220px;
+        background-color: var(--background-blush);
+        border-bottom: 1px solid var(--background-blush) ;
+    }
+
+    .bgMedia {
+        width: 220px;
+        height: 220px;
+    }
+
+    .contentRow {
+        flex-direction: column;
+        background-color:var(--background-blush) ;
+        border: none;
+    }
+
+    .left {
+        padding: 2rem 2rem 1rem;
+    }
+
+    .letter {
+        font-size: 3.5rem;
+    }
+
+    .right {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0 1.5rem;
+    }
+
+    .navBtnLabel {
+        margin: 0;
+    }
+
+}
+
+/* ── mobile (≤ 640px) ── */
+@media (max-width: 640px) {
+    .gifRow {
+        flex: 0 0 180px;
+        background-color: var(--background-blush);
+    }
+
+    .bgMedia {
+        width: 180px;
+        height: 180px;
+    }
+
+    .letter {
+        font-size: 2.6rem;
+    }
+
+    .phonetic {
+        font-size: 0.88rem;
+    }
+
+    .definition {
+        font-size: 1rem;
+    }
+
+    .example {
+        font-size: 0.85rem;
+    }
+
+    .left {
+        padding: 1.5rem 1.5rem 0.5rem;
+    }
+}

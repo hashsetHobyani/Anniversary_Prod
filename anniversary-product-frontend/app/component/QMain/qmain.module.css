@@ -1,0 +1,332 @@
+/* ── container ── */
+.container {
+    height: 100vh;
+    width: 100%;
+    background: #080808;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Georgia", serif;
+    position: relative;
+    overflow: hidden;
+}
+
+/* subtle ambient glow behind content */
+.container::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* ── normal / no states ── */
+.center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.eyebrow {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin: 0 0 1.2rem;
+}
+
+.question {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+.subtext {
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.35);
+    margin: 0 0 2.5rem;
+    min-height: 1.5rem;
+    transition: opacity 0.4s ease;
+}
+
+/* ── buttons ── */
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+/* YES — filled */
+.btnYes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 2rem;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,0.9);
+    background: white;
+    color: #080808;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        background   0.22s ease,
+        border-color 0.22s ease,
+        transform    0.22s ease,
+        box-shadow   0.22s ease;
+}
+
+.btnYes:hover {
+    background: rgba(255,255,255,0.88);
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(255,255,255,0.15);
+}
+
+/* NO — ghost */
+.btnNo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 2rem;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        border-color 0.22s ease,
+        color        0.22s ease,
+        transform    0.22s ease;
+}
+
+.btnNo:hover {
+    border-color: rgba(255,255,255,0.6);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* ── image reveal ── */
+.imageWrap {
+    position: relative;
+    margin-top: 0.5rem;
+
+}
+
+.image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 16px;
+    opacity: 0.88;
+    animation: flash 0.5s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+
+.imageCaption {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.05em;
+}
+
+/* ── dark state ── */
+.dark {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.darkImage {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.darkText {
+    font-size: 1.1rem;
+    opacity: 0.55;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    max-width: 340px;
+    line-height: 1.6;
+}
+.timer {
+    display: flex;
+    gap: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* ── redemption state ── */
+.redemption {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.topText {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: #ffffff;
+    margin: 0;
+}
+
+.redemptionHint {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.3);
+    margin: -1.5rem 0 0;
+}
+
+/* redemption button — same nav circle style */
+.redemptionButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 2rem;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,0.5);
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        background   0.22s ease,
+        border-color 0.22s ease,
+        color        0.22s ease,
+        transform    0.22s ease;
+}
+
+.redemptionButton:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.9);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* ── animation ── */
+@keyframes flash {
+    0%   { transform: scale(0.94); opacity: 0; }
+    60%  { transform: scale(1.04); }
+    100% { transform: scale(1);    opacity: 0.88; }
+}
+
+
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+
+/* ── tablet (≤ 1024px) ── */
+@media (max-width: 1024px) {
+    .question {
+        font-size: clamp(1.8rem, 6vw, 2.8rem);
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btnYes,
+    .btnNo {
+        width: 200px;
+    }
+
+    .image {
+        width: 180px;
+        height: 180px;
+    }
+
+    .darkImage {
+        width: 220px;
+        height: 220px;
+    }
+
+    .topText {
+        font-size: clamp(1.6rem, 5vw, 2.4rem);
+    }
+}
+
+/* ── mobile (≤ 640px) ── */
+@media (max-width: 640px) {
+    .question {
+        font-size: clamp(1.6rem, 7vw, 2.2rem);
+    }
+
+    .eyebrow {
+        font-size: 0.62rem;
+    }
+
+    .subtext {
+        font-size: 0.85rem;
+    }
+
+    .btnYes,
+    .btnNo {
+        width: 160px;
+        height: 42px;
+        font-size: 0.88rem;
+    }
+
+    .image {
+        width: 150px;
+        height: 150px;
+        border-radius: 12px;
+    }
+
+    .darkImage {
+        width: 180px;
+        height: 180px;
+    }
+
+    .darkText {
+        font-size: 0.95rem;
+    }
+
+    .topText {
+        font-size: clamp(1.4rem, 7vw, 2rem);
+    }
+
+    .redemptionButton {
+        height: 42px;
+        font-size: 0.85rem;
+        padding: 0 1.5rem;
+    }
+
+    .redemptionHint {
+        font-size: 0.78rem;
+    }
+}

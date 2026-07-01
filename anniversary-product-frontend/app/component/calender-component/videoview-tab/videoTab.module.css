@@ -1,0 +1,80 @@
+/* ── grid ── */
+.videoGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 16px;
+    height: auto;
+}
+
+/* ── cell ── */
+.videoCell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: border-color 0.2s ease;
+}
+
+.videoCell:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* ── video ── */
+.video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    background: #000;
+}
+
+/* ── title ── */
+.videoTitle {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 0 8px 8px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── empty ── */
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.emptyIcon {
+    opacity: 0.25;
+}
+
+/* ── responsive ── */
+@media (max-width: 1024px) {
+    .videoGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 640px) {
+    .videoGrid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .video {
+        aspect-ratio: 16 / 9;
+    }
+}

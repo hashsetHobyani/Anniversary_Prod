@@ -1,0 +1,218 @@
+.page {
+    min-height: 100vh;
+    background: #ffffff;
+    padding-bottom: 8rem;
+}
+
+.inner {
+    width: 90%;
+    max-width: 2000px;
+    margin: 0 auto;
+    gap: 0 2rem;
+}
+
+/* ── calendar wrapper ── */
+.calendarWrapper {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 24px;
+    padding-bottom:4rem;
+    background: #ffffff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+.calendarBody {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 4rem;
+}
+/* ── header row ── */
+.calendarHeader {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 24px 28px 20px;
+    background: #f9fafb;
+    border-bottom: none;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.calendarHeaderLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.calendarTitle {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f1117;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.calendarSub {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    margin: 0;
+    font-style: italic;
+}
+
+/* ── date picker side ── */
+.dateWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+}
+
+.dateLabel {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* ── divider ── */
+.calendarDivider {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin: 0;
+}
+
+/* ── calendar card ── */
+.calendarCard {
+    width: 90vw;
+    max-width: 1600px;
+    padding: 20px;
+        box-shadow:
+        0 -8px 50px rgba(0,0,0,0.06),
+        0 4px 50px rgba(0,0,0,0.05);
+}
+
+/* FullCalendar base */
+.fc {
+    font-family: Inter, system-ui, sans-serif;
+}
+
+.fc-daygrid-day {
+    transition: all 0.2s ease-in-out;
+}
+
+.fc-daygrid-day:hover {
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transform: scale(1.01);
+}
+
+.fc-day-today {
+    background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* today button */
+.todayBtn {
+    background: #111827;
+    color: white;
+    border: 1px solid #000;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.todayBtn:hover {
+    transform: scale(1.05);
+    background: #0b1220;
+}
+
+/* ── responsive ── */
+@media (max-width: 640) {
+    .calendarHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 18px 16px;
+    }
+
+    .dateWrapper {
+        align-items: flex-start;
+        width: 100%;
+    }
+}
+/* ── responsive ── */
+@media (max-width: 1024px) {
+    .inner {
+        width: 95%;
+    }
+
+    .calendarBody {
+        padding: 1.5rem;
+    }
+
+    .calendarCard {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px;
+    }
+
+    .calendarHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 18px 16px;
+        gap: 0.75rem;
+    }
+
+    .dateWrapper {
+        align-items: flex-start;
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .inner {
+        width: 100%;
+        padding: 0;
+    }
+
+    .calendarWrapper {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        margin-top: 12px;
+    }
+
+    .calendarBody {
+        padding: 0.5rem;
+    }
+
+    .calendarCard {
+        width: 100%;
+        max-width: 100%;
+        padding: 4px;
+        box-shadow: none;
+    }
+
+    .calendarHeader {
+        padding: 14px 14px 12px;
+        gap: 0.5rem;
+    }
+
+    .calendarTitle {
+        font-size: 1rem;
+    }
+
+    .calendarSub {
+        font-size: 0.72rem;
+    }
+
+    .page {
+        padding-bottom: 4rem;
+    }
+}

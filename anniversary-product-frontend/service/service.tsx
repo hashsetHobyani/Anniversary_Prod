@@ -1,0 +1,44 @@
+import { DefaultSettings,Keyword,Phase,TimeSettings, User } from "@/types/ViewModels"
+import { author,defaultSettings, keywords, PHASES } from "@/data/data"
+
+// hardcoded data service here
+export type Scene =
+  | "intro"
+  | "dictionary"
+  | "graphicIntro"
+  | "memoryCalendar";
+  
+export const UserService={
+    getAuthor():User{
+        return author
+    },
+}
+export const DefaultService={
+    getSettings():DefaultSettings{
+        return defaultSettings
+    }
+}
+export const WordService ={
+    getKeywords():Keyword[]{
+        return keywords
+    },
+    getPhases():Phase[]{
+        return PHASES
+    }
+}
+export const ImageService=
+{
+    getGraphic2Image(){
+                const IMAGES = [
+            '/images/plant0.jpeg',
+            '/images/plant1.jpeg',
+            '/images/plant2.jpeg',
+            '/images/plant3.jpeg',
+            '/images/plant4.jpeg',
+            '/images/plant5.jpeg',
+            
+        ];
+        return IMAGES
+    }
+}
+

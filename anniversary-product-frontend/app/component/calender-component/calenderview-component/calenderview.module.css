@@ -1,0 +1,107 @@
+/* ── calendar full width ── */
+.calendarCard {
+    width: 100%;
+    padding: 20px;
+}
+
+/* ── event cell ── */
+.eventCell {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 2px 3px;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* ── pill base ── */
+.eventPill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-size: 11px;
+    font-weight: 500;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* chat — blue */
+.pillChat {
+    background: rgba(59, 130, 246, 0.15);
+    color: #1d4ed8;
+    border-left: 2px solid #3b82f6;
+}
+
+/* images — teal */
+.pillImage {
+    background: rgba(20, 184, 166, 0.15);
+    color: #0f766e;
+    border-left: 2px solid #14b8a6;
+}
+
+/* videos — violet */
+.pillVideo {
+    background: rgba(139, 92, 246, 0.15);
+    color: #6d28d9;
+    border-left: 2px solid #8b5cf6;
+}
+
+.pillLabel {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pillCount {
+    font-size: 9px;
+    opacity: 0.65;
+    font-weight: 600;
+}
+
+/* ── RESPONSIVE ── */
+
+/* tablet */
+@media (max-width: 1024px) {
+    .calendarCard {
+        padding: 12px;
+    }
+
+    .eventPill {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+}
+
+/* mobile — icon only, no label text */
+@media (max-width: 640px) {
+    .calendarCard {
+        padding: 6px;
+    }
+
+    .pillLabel {
+        display: none;
+    }
+
+    .eventPill {
+        width: auto;
+        padding: 3px;
+        border-radius: 50%;
+        border-left: none;
+        justify-content: center;
+    }
+
+    .pillChat  { background: rgba(59, 130, 246, 0.2);  color: #1d4ed8; }
+    .pillImage { background: rgba(20, 184, 166, 0.2);  color: #0f766e; }
+    .pillVideo { background: rgba(139, 92, 246, 0.2);  color: #6d28d9; }
+
+    .eventCell {
+        flex-direction: row;
+        gap: 2px;
+        flex-wrap: wrap;
+    }
+}

@@ -1,0 +1,114 @@
+.chatStack {
+    padding: 16px 12px;
+    max-width: 520px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* empty */
+.emptyState {
+    min-height: 300px;
+    gap: 8px;
+    color: rgba(255,255,255,0.3);
+}
+
+.emptyIcon { opacity: 0.25; }
+
+/* row */
+.messageRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    margin-bottom: 2px;
+}
+
+.messageRowMe  { flex-direction: row-reverse; }
+.messageRowHer { flex-direction: row; }
+
+/* avatar */
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0.3px;
+}
+
+.avatarMe  { background: #2563eb; color: white; }
+.avatarHer { background: #374151; color: #d1d5db; }
+
+/* bubble */
+.bubble {
+    max-width: 72%;
+    border-color: transparent !important;
+    padding: 8px 12px;
+    min-width: 72px;
+    position: relative;
+}
+
+.bubbleMe {
+    background: #2563eb;
+    border-bottom-right-radius: 4px !important;
+}
+
+.bubbleHer {
+    background: #1f2937;
+    border-bottom-left-radius: 4px !important;
+}
+
+.bubbleMedia {
+    padding: 12px 16px;
+    min-width: 200px;
+}
+
+.bubbleMissed {
+    background: rgba(220, 38, 38, 0.15) !important;
+    border: 1px solid rgba(220,38,38,0.3) !important;
+}
+
+/* text */
+.bubbleText {
+    color: rgba(255,255,255,0.92);
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 13.5px;
+    line-height: 1.45;
+}
+
+.bubbleMediaText {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.timestamp {
+    opacity: 0.4;
+    color: white;
+    margin-top: 3px;
+    font-size: 10px;
+}
+
+/* icon circle */
+.iconCircle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    flex-shrink: 0;
+    color: white;
+}
+
+.iconCircleMissed {
+    background: rgba(220, 38, 38, 0.2);
+    color: #fca5a5;
+}

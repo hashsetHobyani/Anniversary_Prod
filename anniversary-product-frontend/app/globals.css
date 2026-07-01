@@ -1,0 +1,136 @@
+@import "tailwindcss";
+/* @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=DM+Sans:wght@300;400&display=swap'); */
+:root {
+  --background: #ffffff;
+  --background-purple:#5a5c82;
+  --background-blush:#fbdcda;
+  --background-purple-card:#b27cb6;
+  --background-purple-light:#f3f3fb;
+  --background-purple-text:#60617f;
+  --background-purple-key:#a382b3;
+  --background-pink-light:#E7A0CC;
+  --background-pink-dark:#E84797;
+  --background-pink-shade:#e8d9ed;
+  --background-blue-dark:#203F9A;
+  --background-blue-light:#759DB7;
+  --background-green-light:#EFE8E0;
+  --background-gentle: #969696;
+  --frozen-silver:#D7DEE6;
+  --artic-blue:#527A9E;
+  --winter-frost:#9EB7D6;
+  --frozen-snow:#F5F8FC;
+  --snow-grey:#f2f2f2;
+  --foreground: #242736;
+  --nav-bg: #ffffff;
+  --nav-text: #333333;
+  --nav-muted: rgba(34,34,34,0.60);
+  --nav-border: rgba(0,0,0,0.08);
+  --nav-border-dark:#3333331c;
+  --nav-shadow: 0 10px 30px rgba(0,0,0,0.10);
+  --font-work: 'Work Sans', sans-serif;
+  --font-ibm: 'IBM Plex Sans', sans-serif;
+  --font-corp:'Cormorant Garamond', serif;
+  --font-dms:'DM Sans', sans-serif;
+  --paragraph: #808080;
+}
+  html, body {
+  font-family: var(--font-work);
+  color: var(--nav-text);
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* disable dark mode option */
+      --background: #ffffff;
+    --foreground: #242736;
+    /* --nav-text:#EDEDED;
+    --paragraph:#dfdfdf; */
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-work);
+  font-size: 16px; 
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after{
+  box-sizing: border-box;
+}
+/* Paragraphs */
+p {
+  font-family: var(--font-work);
+  font-size: 16px; /* works sans 16 */
+  line-height: 24px;
+  margin-bottom: 1em;
+}
+
+/* Headings */
+h1 {
+  font-family: var(--font-ibm);
+  font-size: 38px; 
+  line-height: 46px;
+  font-weight: 700;
+}
+
+h2 {
+  font-family: var(--font-ibm);
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 600;
+}
+
+h3 {
+  font-family: var(--font-ibm);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+h4, h5, h6 {
+  font-family: var(--font-work);
+}
+
+/* FullCalendar mobile overrides */
+@media (max-width: 640px) {
+    .fc .fc-toolbar {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start !important;
+    }
+
+    .fc .fc-toolbar-title {
+        font-size: 1rem !important;
+    }
+
+    .fc .fc-button {
+        padding: 4px 8px !important;
+        font-size: 0.75rem !important;
+    }
+
+    .fc .fc-daygrid-day-number {
+        font-size: 0.7rem !important;
+        padding: 2px 4px !important;
+    }
+
+    .fc .fc-col-header-cell-cushion {
+        font-size: 0.65rem !important;
+        padding: 4px 2px !important;
+    }
+
+    .fc td, .fc th {
+        border-color: #f0f0f0 !important;
+    }
+}
