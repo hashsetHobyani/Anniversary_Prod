@@ -22,10 +22,10 @@ builder.Services.AddLogging(config =>
 });
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("NextJsPolicy", policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
-            "http://localhost:3000"
+            "http://localhost:3000","https://anniversary-product.pages.dev/"
             )
         .AllowAnyHeader()
         .AllowAnyMethod();
@@ -73,7 +73,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("NextJsPolicy");
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.MapControllers();
 
