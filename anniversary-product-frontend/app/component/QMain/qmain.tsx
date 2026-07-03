@@ -84,6 +84,25 @@ const [timer, setTimer] = useState<TimerDto | null>(null);
     return (
         <section className={styles.container}>
 
+        {/* ── audio control — single source of truth ── */}
+        {stage !== "dark" && (
+            <MusicIslandComponent
+                key="jcole"
+                src="/music/wetdreamz.mp3"
+                artist="J. Cole"
+                title="Wet Dreamz"
+                showIsland={false}
+            />
+        )}
+        {stage == "dark" && (
+            <MusicIslandComponent
+                key="avemaria"
+                src="/music/avemaria.mp3"
+                artist="Schubert"
+                title="Ave Maria"
+                showIsland={false}
+            />
+        )}
             <AnimatePresence mode="wait">
                 {stage !== "dark" && stage !== "redemption" && (
                     <motion.div
@@ -95,8 +114,6 @@ const [timer, setTimer] = useState<TimerDto | null>(null);
                         transition={{ duration: 0.6, ease: 'easeOut' }}
                     >
                         
-                    <MusicIslandComponent src={'/music/wetdreamz.mp3'} artist={'Jcole'} title={'Wet Dreamz'} showIsland={false}/>
-
                 <div className={styles.eyebrow}>
                      <div className={styles.timer}>
                     <div>{progress.years}y</div>
@@ -177,8 +194,6 @@ const [timer, setTimer] = useState<TimerDto | null>(null);
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.1 }}
                     >
-                    <MusicIslandComponent src={'/music/avemaria.mp3'} artist={'hadlenees'} title={'Ave Maria'} showIsland={false}/>
-
                         <img src="/images/graveyard.png" className={styles.darkImage} alt="" />
                         <p className={styles.darkText}>
                             well done. you killed us.<br />you really wanted this.
@@ -194,9 +209,7 @@ const [timer, setTimer] = useState<TimerDto | null>(null);
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.7, ease: 'easeOut' }}
-                    >
-                                        <MusicIslandComponent src={'/music/avemaria.mp3'} artist={'hadlenees'} title={'Ave Maria'} showIsland={false}/>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+                    >                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
                         <h1 className={styles.topText}>
                             does it feel like<br />a year?
                         </h1>

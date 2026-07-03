@@ -213,3 +213,10 @@ export interface MessageStats {
 
 
 }
+
+///
+
+export type SuggestedDate ={
+    description : string,
+    date : string
+}

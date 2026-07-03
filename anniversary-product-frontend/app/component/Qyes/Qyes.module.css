@@ -442,10 +442,18 @@
     .timerVal {
         font-size: 2.2rem;
     }
+    .musicPlayer {
+    background: transparent;
+    backdrop-filter:blur(0px);
+}
 }
 
 /* ── mobile (≤ 640px) ── */
 @media (max-width: 640px) {
+        .musicPlayer {
+    background: transparent;
+    backdrop-filter:blur(0px);
+}
     .left {
         padding: 2rem 1rem 1rem;
     }

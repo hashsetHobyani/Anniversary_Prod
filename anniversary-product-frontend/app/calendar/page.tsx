@@ -5,12 +5,33 @@ import styles from './calender.module.css';
 import CalendarViewComponent from '../component/calender-component/calenderview-component/calenderview';
 import AboutCardComponent from '../component/calender-component/about-component/aboutcard';
 import ChartsComponent from '../component/calender-component/charts-component/chats';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DatePickerInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
-import { IconCalendar } from '@tabler/icons-react'
+import { IconCalendar,IconSparkles } from '@tabler/icons-react'
+import { SuggestedDate } from '@/types/ViewModels';
+import { DateService } from '@/service/service';
+import { Tooltip, ActionIcon } from '@mantine/core';
 export default function CalendarPage() {
     const [jumpDate, setJumpDate] = useState<Date | null>(null);
+    const [suggestions] = useState<SuggestedDate[]>(DateService.getSuggestedDates());
+    const [currentHint, setCurrentHint] = useState(0);
+    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+    // rotate hint every 3s
+    useEffect(() => {
+        intervalRef.current = setInterval(() => {
+            setCurrentHint(prev => (prev + 1) % suggestions.length);
+        }, 3000);
+        return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    }, [suggestions.length]);
+
+    const handleHintClick = () => {
+        const s = suggestions[currentHint];
+        setJumpDate(new Date(s.date));
+    };
+
+    const hint = suggestions[currentHint];
     return (
         <div className={styles.page}>
             <div className={styles.inner}>
@@ -47,6 +68,33 @@ export default function CalendarPage() {
                                     },
                                 }}
                             />
+                             {/* ── hint carousel ── */}
+                            {hint && (
+                                <Tooltip
+                                    label={hint.description}
+                                    position="bottom"
+                                    withArrow
+                                    arrowSize={6}
+                                >
+                                    <button
+                                        className={styles.hintPill}
+                                        onClick={handleHintClick}
+                                    >
+                                        <IconSparkles size={11} className={styles.hintIcon} />
+                                        <span className={styles.hintTry}>try</span>
+                                        <span className={styles.hintDate}>{hint.date}</span>
+                                        {/* dot indicators */}
+                                        <span className={styles.hintDots}>
+                                            {suggestions.map((_, i) => (
+                                                <span
+                                                    key={i}
+                                                    className={`${styles.hintDot} ${i === currentHint ? styles.hintDotActive : ''}`}
+                                                />
+                                            ))}
+                                        </span>
+                                    </button>
+                                </Tooltip>
+                            )}
                         </div>
                     </div>
 

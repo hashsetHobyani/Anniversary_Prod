@@ -1,4 +1,4 @@
-import { DefaultSettings,Keyword,Phase,TimeSettings, User } from "@/types/ViewModels"
+import { DefaultSettings,Keyword,Phase,SuggestedDate,TimeSettings, User } from "@/types/ViewModels"
 import { author,defaultSettings, keywords, PHASES } from "@/data/data"
 
 // hardcoded data service here
@@ -39,6 +39,18 @@ export const ImageService=
             
         ];
         return IMAGES
+    }
+}
+export const DateService = {
+    getSuggestedDates(): SuggestedDate[] {
+        return [
+            { date: "2026-04-06", description: "Favourite Day 😏 " },
+            { date: "2025-05-18", description: "First photo together" },
+            { date: "2024-08-14", description: "The day everything changed" },
+            { date: "2024-12-25", description: "First christmas" },
+            { date: "2025-01-01", description: "New year together" },
+            { date: "2024-06-21", description: "Our first date" },
+        ];
     }
 }
 

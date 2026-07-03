@@ -58,7 +58,6 @@ export default function GraphicMainComponent() {
 
     return (
         <section className={styles.container}>
-
             {/* LEFT IMAGE GRID */}
             <div className={styles.leftGrid}>
                 <div className={styles.grid}>

@@ -133,6 +133,80 @@
     background: #0b1220;
 }
 
+/* ── hint carousel pill ── */
+.hintPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #f9fafb;
+    border: 1.5px dashed #d1d5db;
+    border-radius: 999px;
+    padding: 4px 10px 4px 8px;
+    cursor: pointer;
+    font-size: 0.72rem;
+    color: #6b7280;
+    transition:
+        background  0.2s ease,
+        border-color 0.2s ease,
+        color       0.2s ease;
+    width: fit-content;
+    animation: hintFade 0.4s ease;
+}
+
+.hintPill:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+}
+
+.hintIcon {
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+
+.hintTry {
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.hintDate {
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.04em;
+    color: #374151;
+}
+
+.hintPill:hover .hintDate {
+    color: #1d4ed8;
+}
+
+/* dot indicators */
+.hintDots {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: 2px;
+}
+
+.hintDot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #d1d5db;
+    transition: background 0.3s ease, width 0.3s ease;
+}
+
+.hintDotActive {
+    background: #3b82f6;
+    width: 10px;
+    border-radius: 999px;
+}
+
+@keyframes hintFade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ── responsive ── */
 @media (max-width: 640) {
     .calendarHeader {
@@ -144,6 +218,14 @@
     .dateWrapper {
         align-items: flex-start;
         width: 100%;
+    }
+        .hintPill {
+        font-size: 0.65rem;
+        padding: 3px 8px 3px 6px;
+    }
+
+    .hintDate {
+        font-size: 0.65rem;
     }
 }
 /* ── responsive ── */
