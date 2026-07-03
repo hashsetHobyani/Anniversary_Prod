@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './graphic.module.css';
 import { useScene } from '@/app/SceneContext';
 import { ImageService, WordService } from '@/service/service';
@@ -14,7 +14,8 @@ export default function GraphicMainComponent() {
     const [progressIndex, setProgressIndex] = useState(0);
     const [pulsingImg, setPulsingImg] = useState<number | null>(null);
     const [animDone, setAnimDone] = useState(false);
-
+    const containerRef = useRef<HTMLDivElement>(null);
+    const rightRef = useRef<HTMLDivElement>(null);
     const keywords = WordService.getKeywords();
     const Images = ImageService.getGraphic2Image();
     const totalImages = 6;
@@ -38,13 +39,31 @@ export default function GraphicMainComponent() {
         const startDelay = setTimeout(pulseNext, 400);
         return () => clearTimeout(startDelay);
     }, []);
+// auto-scroll right panel when new keyword appears
+    useEffect(() => {
+        if (visibleKeywords.length === 0) return;
 
+        // on mobile the container scrolls, on desktop .right scrolls
+        const isMobile = window.innerWidth <= 1024;
+
+        if (isMobile && containerRef.current) {
+            containerRef.current.scrollTo({
+                top: containerRef.current.scrollHeight,
+                behavior: 'smooth',
+            });
+        } else if (rightRef.current) {
+            rightRef.current.scrollTo({
+                top: rightRef.current.scrollHeight,
+                behavior: 'smooth',
+            });
+        }
+    }, [visibleKeywords]);
     // ── progressive keyword reveal (starts after image anim) ──
     useEffect(() => {
         if (!animDone) return;
 
         if (progressIndex >= keywords.length) {
-            const timer = setTimeout(() => setScene("contentSummary"), 3500);
+            const timer = setTimeout(() => setScene("contentSummary"), 3000);
             return () => clearTimeout(timer);
         }
 
@@ -57,7 +76,7 @@ export default function GraphicMainComponent() {
     }, [progressIndex, animDone]);
 
     return (
-        <section className={styles.container}>
+        <section className={styles.container} ref={containerRef}>
             {/* LEFT IMAGE GRID */}
             <div className={styles.leftGrid}>
                 <div className={styles.grid}>
@@ -86,7 +105,7 @@ export default function GraphicMainComponent() {
             </div>
 
             {/* RIGHT TEXT AREA */}
-            <div className={styles.right}>
+            <div className={styles.right}  ref={rightRef}>
                 <div className={styles.keywordGrid}>
                 <AnimatePresence>
                     {visibleKeywords.map((item) => (

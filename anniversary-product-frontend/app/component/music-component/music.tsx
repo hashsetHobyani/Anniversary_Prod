@@ -25,18 +25,33 @@ export default function MusicIslandComponent({
 }: Props) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
-    useEffect(() => {
-        const audio = new Audio(src);
-        audio.loop = loop;
-        audio.volume = volume;
-        audio.play().catch(() => {});
-        audioRef.current = audio;
+useEffect(() => {
+    const audio = new Audio(src);
+    audio.loop = loop;
+    audio.volume = volume;
+    audioRef.current = audio;
 
-        return () => {
-            audio.pause();
-            audio.src = '';
-        };
-    }, [src, loop, volume]);
+    // attempt 1 — immediate (works if user already interacted)
+    const tryPlay = () => {
+        audio.play().catch(() => {
+            // attempt 2 — wait for first touch/click then retry
+            const retry = () => {
+                audio.play().catch(() => {});
+                window.removeEventListener('touchstart', retry);
+                window.removeEventListener('click', retry);
+            };
+            window.addEventListener('touchstart', retry, { once: true, passive: true });
+            window.addEventListener('click',      retry, { once: true });
+        });
+    };
+
+    tryPlay();
+
+    return () => {
+        audio.pause();
+        audio.src = '';
+    };
+}, [src, loop, volume]);
 
 
 

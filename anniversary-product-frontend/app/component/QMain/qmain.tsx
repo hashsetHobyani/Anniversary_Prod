@@ -85,23 +85,23 @@ const [timer, setTimer] = useState<TimerDto | null>(null);
         <section className={styles.container}>
 
         {/* ── audio control — single source of truth ── */}
-        {stage !== "dark" && (
-            <MusicIslandComponent
-                key="jcole"
-                src="/music/wetdreamz.mp3"
-                artist="J. Cole"
-                title="Wet Dreamz"
-                showIsland={false}
-            />
-        )}
-        {stage == "dark" && (
-            <MusicIslandComponent
-                key="avemaria"
-                src="/music/avemaria.mp3"
-                artist="Schubert"
-                title="Ave Maria"
-                showIsland={false}
-            />
+            {stage !== "dark" && stage !== "redemption" && (
+                <MusicIslandComponent
+                    key="sjava"
+                    src="/music/Iphisi.mp3"
+                    artist="Sjava"
+                    title="Iphisi"
+                    showIsland={false}
+                />
+            )}
+            {(stage === "dark" || stage === "redemption") && (
+                <MusicIslandComponent
+                    key="avemaria"
+                    src="/music/avemaria.mp3"
+                    artist="Schubert"
+                    title="Ave Maria"
+                    showIsland={false}
+                />
         )}
             <AnimatePresence mode="wait">
                 {stage !== "dark" && stage !== "redemption" && (

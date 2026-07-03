@@ -14,6 +14,7 @@ import QYesComponent from './component/Qyes/Qyes';
 import QEndComponent from './component/QNo/qend';
 import CalendarViewComponent from './component/calender-component/calenderview-component/calenderview';
 import { Scene } from '@/types/ViewModels';
+import { useAudioUnlock } from './useAudioUnlock';
 
 const slideVariants = {
   initial: { y: '100%', opacity: 0 },
@@ -36,7 +37,7 @@ const sceneMap: Record<Scene, React.ReactElement> = {
 
 export default function SceneRenderer() {
   const { scene } = useScene();
-
+  useAudioUnlock(); 
   return (
     // overflow-hidden is critical — clips the slide-in/out motion
     <div style={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
