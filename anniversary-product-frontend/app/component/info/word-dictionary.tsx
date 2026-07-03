@@ -77,11 +77,14 @@ export default function WordDictionaryComponent({ onNext }: { onNext?: () => voi
                             </button>
                             <span className={styles.navBtnLabel}>see what a year looks like</span>
                         </div>
-                    </div>
-                        {/* ── ROW 3: music island ── */}
-                <MusicIslandComponent src={'/music/annversary-start.mp3'} artist={'Toni Toni '} title={'Anniversary'}/>
 
-                    
+                    </div>
+                        
+                    <div className={styles.music}>
+                        {/* ── ROW 3: music island ── */}
+                        <MusicIslandComponent src={'/music/annversary-start.mp3'} artist={'Toni Toni '} title={'Anniversary'}/>
+
+                    </div>
                 </motion.section>
             )}
         </AnimatePresence>

@@ -187,7 +187,11 @@
     justify-content: center;
     padding-bottom: 0.5rem;
 }
-
+.music{
+    width:100%;
+    background: var(--background-blush, #fdf0f0);
+    display: flex;
+}
 
 /* ══════════════════════════════════════
    RESPONSIVE

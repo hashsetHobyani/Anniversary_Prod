@@ -8,8 +8,8 @@ import { SceneProvider } from "./SceneContext";
 import Providers from "./providers";
 
 export const metadata: Metadata = {
-  title: "Admin",
-  description: "Admin Dashboard",
+  title: "Anniversary Application",
+  description: "Celebrating a year and more together with Ms Miya",
 };
 
 export default function RootLayout({

@@ -44,12 +44,13 @@ export const ImageService=
 export const DateService = {
     getSuggestedDates(): SuggestedDate[] {
         return [
-            { date: "2026-04-06", description: "Favourite Day 😏 " },
-            { date: "2025-05-18", description: "First photo together" },
-            { date: "2024-08-14", description: "The day everything changed" },
-            { date: "2024-12-25", description: "First christmas" },
-            { date: "2025-01-01", description: "New year together" },
-            { date: "2024-06-21", description: "Our first date" },
+            { date: "2026-04-06", description: "Favourite Movie Day 😏 " },
+            { date: "2025-10-09", description: "The day everything changed" },
+            { date: "2025-07-13", description: "First I love you from her" },
+            { date: "2025-06-21", description: "Rejection Day / Anniversary Day " },
+            { date: "2025-05-23", description: "First Meet Up" },
+            { date: "2025-04-12", description: "My favourite unexplainable memory" },
+            { date: "2025-03-25", description: "The day everything changed" },
         ];
     }
 }

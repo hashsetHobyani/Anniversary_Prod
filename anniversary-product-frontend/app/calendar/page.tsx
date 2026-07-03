@@ -22,7 +22,7 @@ export default function CalendarPage() {
     useEffect(() => {
         intervalRef.current = setInterval(() => {
             setCurrentHint(prev => (prev + 1) % suggestions.length);
-        }, 3000);
+        }, 5000);
         return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
     }, [suggestions.length]);
 
@@ -81,6 +81,7 @@ export default function CalendarPage() {
                                         onClick={handleHintClick}
                                     >
                                         <IconSparkles size={11} className={styles.hintIcon} />
+                                        <span className={styles.hintTry}>{hint.description}</span>
                                         <span className={styles.hintTry}>try</span>
                                         <span className={styles.hintDate}>{hint.date}</span>
                                         {/* dot indicators */}
