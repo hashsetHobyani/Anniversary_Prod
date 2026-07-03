@@ -53,7 +53,7 @@ export default function GraphicIntroComponent() {
                 playsInline
                 onEnded={handleVideoEnd}
             >
-                <source src="/videos/a year time lapse.mp4" type="video/mp4" />
+                <source src="/videos/a-year-time-lapse.mp4" type="video/mp4" />
             </video>
 
             <div className={styles.overlay} />
