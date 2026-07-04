@@ -1,10 +1,9 @@
 .container {
     height: 100vh;
     width: 100%;
-    padding: 3rem 0px;
     display: flex;
     background: #ffffff;
-    /* color: var(--paragraph); */
+    color: var(--paragraph);
     position: relative;
     overflow: hidden;         
 }
@@ -14,7 +13,7 @@
     display: flex;
     text-align: start;
     flex-direction: column;
-    background-color: var(--paragraph);
+    background-color: var(--artic-green);
     padding: 2rem;
 }
 /* ── left heading block ── */
