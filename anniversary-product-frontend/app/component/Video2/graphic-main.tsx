@@ -10,20 +10,14 @@ export default function GraphicMainComponent() {
     const { setScene } = useScene();
     const [pulsingImg, setPulsingImg] = useState<number | null>(null);
     const [animDone, setAnimDone] = useState(false);
-    const [unlockedCount, setUnlockedCount] = useState(0); // how many keywords revealed
-    const [activeSlide, setActiveSlide] = useState(0);     // which keyword is showing
+    const [unlockedCount, setUnlockedCount] = useState(0);
+    const [activeSlide, setActiveSlide] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
-    const autoSlideRef = useRef<NodeJS.Timeout | null>(null);
-    const sceneTimerRef = useRef<NodeJS.Timeout | null>(null);
-    const userInterruptedRef = useRef(false);
 
     const keywords = WordService.getKeywords();
     const Images = ImageService.getGraphic2Image();
     const totalImages = Images.length;
-    const REVEAL_INTERVAL = 2500;   // ms between keyword reveals
-    const SLIDE_INTERVAL  = 9000;   // ms auto-advance carousel
-    const INTERRUPT_BONUS = 7000;   // extra ms given when user taps nav
-    const SCENE_DELAY     = 6000;   // ms after last keyword before next scene
+    const REVEAL_INTERVAL = 2200;
 
     // ── image pulse ──
     useEffect(() => {
@@ -42,75 +36,35 @@ export default function GraphicMainComponent() {
         return () => clearTimeout(t);
     }, []);
 
-    // ── progressive keyword reveal (after anim done) ──
+    // ── progressive keyword reveal ──
     useEffect(() => {
         if (!animDone) return;
         if (unlockedCount >= keywords.length) return;
 
         const t = setTimeout(() => {
             setUnlockedCount(prev => prev + 1);
-            setActiveSlide(unlockedCount); // show newest revealed keyword
+            setActiveSlide(unlockedCount);
         }, REVEAL_INTERVAL);
 
         return () => clearTimeout(t);
     }, [animDone, keywords.length, unlockedCount]);
 
-    // ── auto-advance carousel (once keywords start showing) ──
-    const resetAutoSlide = () => {
-        if (autoSlideRef.current) clearInterval(autoSlideRef.current);
-        autoSlideRef.current = setInterval(() => {
-            setActiveSlide(prev => {
-                const next = prev + 1;
-                if (next >= unlockedCount) return 0; // loop back
-                return next;
-            });
-        }, SLIDE_INTERVAL);
-    };
-
-    useEffect(() => {
-        if (unlockedCount === 0) return;
-        resetAutoSlide();
-        return () => { if (autoSlideRef.current) clearInterval(autoSlideRef.current); };
-    }, [resetAutoSlide, unlockedCount]);
-
-    // ── scene transition after all keywords revealed ──
-    useEffect(() => {
-        if (unlockedCount < keywords.length) return;
-
-        const schedule = () => {
-            if (sceneTimerRef.current) clearTimeout(sceneTimerRef.current);
-            sceneTimerRef.current = setTimeout(() => {
-                setScene("contentSummary");
-            }, userInterruptedRef.current ? INTERRUPT_BONUS : SCENE_DELAY);
-        };
-
-        schedule();
-        return () => { if (sceneTimerRef.current) clearTimeout(sceneTimerRef.current); };
-    }, [unlockedCount]);
-
     // ── manual nav ──
     const canPrev = activeSlide > 0;
     const canNext = activeSlide < unlockedCount - 1;
+    const isLastSlide = activeSlide === keywords.length - 1
+        && unlockedCount >= keywords.length;
 
     const scroll = (dir: 'prev' | 'next') => {
-        userInterruptedRef.current = true;
-
-        // reset scene timer to give extra time
-        if (sceneTimerRef.current) clearTimeout(sceneTimerRef.current);
-        if (unlockedCount >= keywords.length) {
-            sceneTimerRef.current = setTimeout(() => {
+        if (dir === 'next') {
+            if (isLastSlide) {
                 setScene("contentSummary");
-            }, INTERRUPT_BONUS);
+                return;
+            }
+            setActiveSlide(prev => Math.min(unlockedCount - 1, prev + 1));
+        } else {
+            setActiveSlide(prev => Math.max(0, prev - 1));
         }
-
-        // reset auto-slide
-        resetAutoSlide();
-
-        setActiveSlide(prev =>
-            dir === 'prev'
-                ? Math.max(0, prev - 1)
-                : Math.min(unlockedCount - 1, prev + 1)
-        );
     };
 
     const currentKeyword = keywords[activeSlide];
@@ -120,10 +74,15 @@ export default function GraphicMainComponent() {
 
             {/* LEFT IMAGE GRID */}
             <div className={styles.leftGrid}>
-                <h4 className={styles.bodyText}>
-                    Watch Time Moving Through Our Little Responsibility...
-                </h4>
-                <p className={styles.kicker}>Rhulani</p>
+                <div className={styles.leftHeading}>
+                    <p className={styles.headingEyebrow}>our little world</p>
+                    <h4 className={styles.bodyText}>
+                        Watch Time Moving<br />Through Our Little<br />Responsibility
+                    </h4>
+                    <div className={styles.headingAccent} />
+                    <p className={styles.kicker}>— Rhulani</p>
+                </div>
+
                 <div className={styles.grid}>
                     {Images.map((src, i) => (
                         <motion.div
@@ -144,13 +103,15 @@ export default function GraphicMainComponent() {
             {/* RIGHT — KEYWORD CAROUSEL */}
             <div className={styles.right}>
                 {unlockedCount === 0 ? (
-                    <p className={styles.carouselWaiting}>
-                        watch the images first...
-                    </p>
+                    <div className={styles.carouselWaitingWrap}>
+                        <div className={styles.carouselWaitingDot} />
+                        <p className={styles.carouselWaiting}>
+                            watch the images first...
+                        </p>
+                    </div>
                 ) : (
                     <div className={styles.carousel}>
 
-                        {/* card */}
                         <AnimatePresence mode="wait">
                             {currentKeyword && (
                                 <motion.div
@@ -162,8 +123,10 @@ export default function GraphicMainComponent() {
                                     transition={{ duration: 0.45, ease: 'easeInOut' }}
                                 >
                                     <span className={styles.carouselIndex}>
-                                        {String(activeSlide + 1).padStart(2, '0')} /
-                                        {String(unlockedCount).padStart(2, '0')}
+                                        {String(activeSlide + 1).padStart(2, '0')}
+                                        <span style={{ opacity: 0.35 }}>
+                                            {' / '}{String(keywords.length).padStart(2, '0')}
+                                        </span>
                                     </span>
                                     <p className={styles.carouselKeyword}>
                                         {currentKeyword.keyword}
@@ -181,19 +144,15 @@ export default function GraphicMainComponent() {
                                 <button
                                     key={i}
                                     className={`${styles.carouselDot} ${i === activeSlide ? styles.carouselDotActive : ''}`}
-                                    onClick={() => {
-                                        setActiveSlide(i);
-                                        userInterruptedRef.current = true;
-                                        resetAutoSlide();
-                                        if (sceneTimerRef.current) clearTimeout(sceneTimerRef.current);
-                                        if (unlockedCount >= keywords.length) {
-                                            sceneTimerRef.current = setTimeout(
-                                                () => setScene("contentSummary"),
-                                                INTERRUPT_BONUS
-                                            );
-                                        }
-                                    }}
+                                    onClick={() => setActiveSlide(i)}
                                     aria-label={`Slide ${i + 1}`}
+                                />
+                            ))}
+                            {/* locked dots for unrevealed */}
+                            {Array.from({ length: keywords.length - unlockedCount }, (_, i) => (
+                                <span
+                                    key={`locked-${i}`}
+                                    className={styles.carouselDotLocked}
                                 />
                             ))}
                         </div>
@@ -206,13 +165,23 @@ export default function GraphicMainComponent() {
                                 aria-label="Previous"
                                 disabled={!canPrev}
                             >←</button>
+
                             <button
-                                className={`${styles.navBtn} ${!canNext ? styles.navBtnDisabled : ''}`}
+                                className={`${styles.navBtn} ${isLastSlide ? styles.navBtnEnd : ''} ${!canNext && !isLastSlide ? styles.navBtnDisabled : ''}`}
                                 onClick={() => scroll('next')}
                                 aria-label="Next"
-                                disabled={!canNext}
-                            >→</button>
+                                disabled={!canNext && !isLastSlide}
+                            >
+                                {isLastSlide ? '→ continue' : '→'}
+                            </button>
                         </div>
+
+                        {/* hint when locked slides remain */}
+                        {unlockedCount < keywords.length && (
+                            <p className={styles.revealHint}>
+                                {keywords.length - unlockedCount} more revealing...
+                            </p>
+                        )}
                     </div>
                 )}
             </div>

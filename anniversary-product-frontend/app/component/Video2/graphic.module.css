@@ -4,7 +4,7 @@
     padding: 3rem 0px;
     display: flex;
     background: #ffffff;
-    color: var(--paragraph);
+    /* color: var(--paragraph); */
     position: relative;
     overflow: hidden;         
 }
@@ -17,26 +17,225 @@
     background-color: var(--paragraph);
     padding: 2rem;
 }
-/* phase 1 — kicker */
-.kicker {
-    font-size: 1.15rem;
-    font-style: italic;
-    opacity: 0.65;
-    letter-spacing: 0.04em;
-    margin: 0;
-    line-height: 1.5;
-    color: var(--snow-grey);
+/* ── left heading block ── */
+.leftHeading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 3px solid rgba(255,255,255,0.3);
 }
 
-/* phases 2–5 — paragraph body */
-.bodyText {
-    font-size: 1.35rem;
-    font-weight: 400;
-    line-height: 1.75;
-    opacity: 0.92;
+.headingEyebrow {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
     margin: 0;
-    color: #0f1117;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.headingAccent {
+    width: 32px;
+    height: 1.5px;
+    background: rgba(255,255,255,0.25);
+    margin: 0.25rem 0;
+}
+
+.bodyText {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+    color: #ffffff;
     font-family: var(--font-work);
+    letter-spacing: -0.02em;
+}
+
+.kicker {
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.45;
+    letter-spacing: 0.04em;
+    margin: 0;
+    color: rgba(255,255,255,0.7);
+}
+
+/* ── carousel card — with border-left accent ── */
+.carouselCard {
+    width: 100%;
+    max-width: 420px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #3b82f6;   /* ← accent */
+    border-radius: 0 16px 16px 0;     /* flat left, rounded right */
+    padding: 1.75rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 180px;
+}
+
+.carouselIndex {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3b82f6;
+    font-family: 'Courier New', monospace;
+}
+
+.carouselKeyword {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #0f1117;
+    margin: 0;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.carouselDesc {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: #6b7280;
+    margin: 0;
+    font-style: italic;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 0.75rem;
+}
+
+/* ── dots ── */
+.carouselDots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.carouselDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d1d5db;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s ease, width 0.3s ease;
+}
+
+.carouselDotActive {
+    background: #3b82f6;
+    width: 18px;
+    border-radius: 999px;
+}
+
+.carouselDotLocked {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    border: 1px dashed #d1d5db;
+    display: inline-block;
+}
+
+/* ── nav buttons ── */
+.navButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.navBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 2px solid rgba(0,0,0,0.15);
+    background: transparent;
+    color: #374151;
+    font-size: 0.82rem;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        background   0.22s ease,
+        border-color 0.22s ease,
+        color        0.22s ease,
+        transform    0.22s ease;
+    white-space: nowrap;
+}
+
+.navBtn:hover:not(:disabled) {
+    background: rgba(0,0,0,0.05);
+    border-color: #374151;
+    transform: scale(1.05);
+}
+
+.navBtnEnd {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    font-weight: 600;
+    font-size: 0.78rem;
+    padding: 0 16px;
+}
+
+.navBtnEnd:hover {
+    background: #eff6ff !important;
+    border-color: #2563eb !important;
+    color: #2563eb !important;
+}
+
+.navBtnDisabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+/* ── waiting state ── */
+.carouselWaitingWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 6rem;
+}
+
+.carouselWaitingDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d1d5db;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%       { opacity: 1;   transform: scale(1.4); }
+}
+
+.carouselWaiting {
+    font-style: italic;
+    opacity: 0.35;
+    font-size: 0.82rem;
+    text-align: center;
+    color: var(--paragraph);
+    margin: 0;
+}
+
+/* ── reveal hint ── */
+.revealHint {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 /* RIGHT SIDE TEXT */
 
@@ -84,130 +283,6 @@
     gap: 0.6rem;
     scroll-behavior: smooth;
 }
-/* ── carousel wrapper ── */
-.carousel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    width: 100%;
-    padding: 2rem 1rem;
-}
-
-.carouselWaiting {
-    font-style: italic;
-    opacity: 0.3;
-    font-size: 0.85rem;
-    text-align: center;
-    margin-top: 4rem;
-    color: var(--paragraph);
-}
-
-/* ── card ── */
-.carouselCard {
-    width: 100%;
-    max-width: 420px;
-    background: #f9fafb;
-    border: 1.5px dashed #d1d5db;
-    border-radius: 20px;
-    padding: 2rem 2rem 1.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    min-height: 180px;
-    animation: hintFade 0.4s ease;
-}
-
-.carouselIndex {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #9ca3af;
-    font-family: 'Courier New', monospace;
-}
-
-.carouselKeyword {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #0f1117;
-    margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-}
-
-.carouselDesc {
-    font-size: 0.92rem;
-    line-height: 1.65;
-    color: #6b7280;
-    margin: 0;
-    font-style: italic;
-}
-
-/* ── dot indicators ── */
-.carouselDots {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.carouselDot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #d1d5db;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.3s ease, width 0.3s ease;
-}
-
-.carouselDotActive {
-    background: #3b82f6;
-    width: 18px;
-    border-radius: 999px;
-}
-
-/* ── nav buttons ── */
-.navButtons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    padding-top: 4px;
-}
-
-.navBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.45);
-    background: transparent;
-    color: #374151;
-    font-size: 0.9rem;
-    cursor: pointer;
-    user-select: none;
-    transition:
-        background   0.22s ease,
-        border-color 0.22s ease,
-        color        0.22s ease,
-        transform    0.22s ease;
-}
-
-.navBtn:hover {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: #374151;
-    transform: scale(1.1);
-}
-
-.navBtnDisabled {
-    opacity: 0.25;
-    cursor: not-allowed;
-    transform: none !important;
-}
-
 
 /* BOTTOM TIMER */
 .bottomTimer {
@@ -238,10 +313,7 @@
 @media (max-width: 1024px) {
     .container {
         flex-direction: column;
-        height: auto;
-        min-height: 100vh;
         overflow-y: auto;        
-        overflow-x: hidden;
     }
 
     .leftGrid {
