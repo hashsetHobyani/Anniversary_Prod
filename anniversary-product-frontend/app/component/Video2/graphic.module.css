@@ -12,8 +12,8 @@
 .leftGrid {
     width: 40%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: start;
+    flex-direction: column;
     background-color: var(--paragraph);
     padding: 2rem;
 }
@@ -35,6 +35,7 @@
     line-height: 1.75;
     opacity: 0.92;
     margin: 0;
+    color: #0f1117;
     font-family: var(--font-work);
 }
 /* RIGHT SIDE TEXT */
@@ -182,7 +183,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.18);
+    border: 2px solid rgba(255, 255, 255, 0.45);
     background: transparent;
     color: #374151;
     font-size: 0.9rem;
@@ -207,28 +208,6 @@
     transform: none !important;
 }
 
-/* ── responsive ── */
-@media (max-width: 640px) {
-
-}
-.keywordBlock {
-    margin-bottom: 0.5rem;
-}
-
-.keywordLine {
-    font-family:var(--font-ibm);
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--nav-text);
-    margin: 0;
-}
-
-.keywordLine b {
-    color: var(--paragraph);
-    font-weight: 700;
-    font-size: 1.05rem;
-    letter-spacing: 0.01em;
-}
 
 /* BOTTOM TIMER */
 .bottomTimer {
@@ -333,15 +312,6 @@
 
     .carouselDesc {
         font-size: 0.85rem;
-    }
-
-    .keywordLine {
-        font-size: 0.88rem;
-        line-height: 1.6;
-    }
-
-    .keywordLine b {
-        font-size: 0.95rem;
     }
 
     .bottomTimer {

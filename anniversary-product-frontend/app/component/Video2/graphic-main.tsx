@@ -21,9 +21,9 @@ export default function GraphicMainComponent() {
     const Images = ImageService.getGraphic2Image();
     const totalImages = Images.length;
     const REVEAL_INTERVAL = 2500;   // ms between keyword reveals
-    const SLIDE_INTERVAL  = 4000;   // ms auto-advance carousel
-    const INTERRUPT_BONUS = 6000;   // extra ms given when user taps nav
-    const SCENE_DELAY     = 3000;   // ms after last keyword before next scene
+    const SLIDE_INTERVAL  = 9000;   // ms auto-advance carousel
+    const INTERRUPT_BONUS = 7000;   // extra ms given when user taps nav
+    const SCENE_DELAY     = 6000;   // ms after last keyword before next scene
 
     // ── image pulse ──
     useEffect(() => {
@@ -53,7 +53,7 @@ export default function GraphicMainComponent() {
         }, REVEAL_INTERVAL);
 
         return () => clearTimeout(t);
-    }, [animDone, unlockedCount]);
+    }, [animDone, keywords.length, unlockedCount]);
 
     // ── auto-advance carousel (once keywords start showing) ──
     const resetAutoSlide = () => {
@@ -71,7 +71,7 @@ export default function GraphicMainComponent() {
         if (unlockedCount === 0) return;
         resetAutoSlide();
         return () => { if (autoSlideRef.current) clearInterval(autoSlideRef.current); };
-    }, [unlockedCount]);
+    }, [resetAutoSlide, unlockedCount]);
 
     // ── scene transition after all keywords revealed ──
     useEffect(() => {
