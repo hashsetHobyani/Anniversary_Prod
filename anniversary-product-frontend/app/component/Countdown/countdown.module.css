@@ -89,7 +89,7 @@
 
     .intro {
         min-height: 100svh;
-        height: auto;
+        overflow: hidden;
         padding: 2rem 1rem;
     }
 
