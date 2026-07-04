@@ -25,37 +25,37 @@ export const keywords: Keyword[] = [
     {
         id: 2,
         keyword: "Persistence",
-        description: "showing up again and again, refusing to give up on what felt right — the quiet determination that has always been the truest part of who you are."
+        description: "showing up again and again, refusing to give up on what felt right — the quiet determination that has always been the truest part of who i wanted to be to you."
     },
     {
         id: 3,
         keyword: "Discipline",
-        description: "staying focused on what matters most, even when the world was loud and busy — we found each other in the middle of all of it and did not look away."
+        description: "staying focused on what matters most, even when the world was loud and busy — we found each other in the middle of all of it (school, life, heartbroken, busy)   and did not look away."
     },
     {
         id: 4,
         keyword: "Consistency",
-        description: "every good morning text, without fail — small and steady, the kind of thing that quietly becomes the best part of waking up."
+        description: "every good morning text, without fail A small and steady, the kind of thing that quietly becomes the best part of waking up."
     },
     {
         id: 5,
         keyword: "Exposure",
-        description: "being introduced to a world you had never quite seen before — a different way of thinking, of feeling, of being — and finding beauty in the difference."
+        description: "being introduced to a world you had never quite seen before . A different way of thinking, of feeling, of being and finding beauty in the difference."
     },
     {
         id: 6,
         keyword: "Experience",
-        description: "knowing when to speak and when to listen, learning the better ways of loving you — not perfectly, but with everything learned along the way."
+        description: "knowing when to speak and when to listen, learning the better ways of loving you  not perfectly, but with everything learned along the way."
     },
     {
         id: 7,
         keyword: "Time",
-        description: "not something felt passing, but something that disappears entirely — because whenever we are together, there is never enough of it."
+        description: "not something felt passing, but something that disappears entirely because whenever we are together, there is never enough of it."
     },
     {
         id: 8,
         keyword: "Growth",
-        description: "borrowing each other's habits, good and bad, and becoming someone slightly better — shaped by the person sitting across from you."
+        description: "borrowing each other's habits, good and bad, and becoming someone slightly better  shaped by the person sitting across from you."
     }
 ];
 export const PHASES:Phase[] = [

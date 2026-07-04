@@ -17,6 +17,26 @@
     background-color: var(--paragraph);
     padding: 2rem;
 }
+/* phase 1 — kicker */
+.kicker {
+    font-size: 1.15rem;
+    font-style: italic;
+    opacity: 0.65;
+    letter-spacing: 0.04em;
+    margin: 0;
+    line-height: 1.5;
+    color: var(--snow-grey);
+}
+
+/* phases 2–5 — paragraph body */
+.bodyText {
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.75;
+    opacity: 0.92;
+    margin: 0;
+    font-family: var(--font-work);
+}
 /* RIGHT SIDE TEXT */
 
 .grid {
@@ -62,6 +82,134 @@
     justify-content: flex-start;  
     gap: 0.6rem;
     scroll-behavior: smooth;
+}
+/* ── carousel wrapper ── */
+.carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 2rem 1rem;
+}
+
+.carouselWaiting {
+    font-style: italic;
+    opacity: 0.3;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 4rem;
+    color: var(--paragraph);
+}
+
+/* ── card ── */
+.carouselCard {
+    width: 100%;
+    max-width: 420px;
+    background: #f9fafb;
+    border: 1.5px dashed #d1d5db;
+    border-radius: 20px;
+    padding: 2rem 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 180px;
+    animation: hintFade 0.4s ease;
+}
+
+.carouselIndex {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    font-family: 'Courier New', monospace;
+}
+
+.carouselKeyword {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0f1117;
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.carouselDesc {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #6b7280;
+    margin: 0;
+    font-style: italic;
+}
+
+/* ── dot indicators ── */
+.carouselDots {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.carouselDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d1d5db;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s ease, width 0.3s ease;
+}
+
+.carouselDotActive {
+    background: #3b82f6;
+    width: 18px;
+    border-radius: 999px;
+}
+
+/* ── nav buttons ── */
+.navButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 4px;
+}
+
+.navBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.18);
+    background: transparent;
+    color: #374151;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        background   0.22s ease,
+        border-color 0.22s ease,
+        color        0.22s ease,
+        transform    0.22s ease;
+}
+
+.navBtn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: #374151;
+    transform: scale(1.1);
+}
+
+.navBtnDisabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ── responsive ── */
+@media (max-width: 640px) {
+
 }
 .keywordBlock {
     margin-bottom: 0.5rem;
@@ -168,6 +316,23 @@
         gap: 0.6rem;
         height: auto;
         overflow-y: visible;
+    }
+    .carousel {
+        padding: 1rem 0.5rem;
+        gap: 1rem;
+    }
+
+    .carouselCard {
+        padding: 1.5rem 1.25rem;
+        min-height: 160px;
+    }
+
+    .carouselKeyword {
+        font-size: 1.3rem;
+    }
+
+    .carouselDesc {
+        font-size: 0.85rem;
     }
 
     .keywordLine {

@@ -1,29 +1,33 @@
 'use client';
-
 import { useEffect, useRef, useState } from 'react';
 import styles from './graphic.module.css';
 import { useScene } from '@/app/SceneContext';
 import { ImageService, WordService } from '@/service/service';
-import { Keyword } from '@/types/ViewModels';
 import { motion, AnimatePresence } from 'framer-motion';
 import MusicIslandComponent from '../music-component/music';
 
 export default function GraphicMainComponent() {
     const { setScene } = useScene();
-    const [visibleKeywords, setVisibleKeywords] = useState<Keyword[]>([]);
-    const [progressIndex, setProgressIndex] = useState(0);
     const [pulsingImg, setPulsingImg] = useState<number | null>(null);
     const [animDone, setAnimDone] = useState(false);
+    const [unlockedCount, setUnlockedCount] = useState(0); // how many keywords revealed
+    const [activeSlide, setActiveSlide] = useState(0);     // which keyword is showing
     const containerRef = useRef<HTMLDivElement>(null);
-    const rightRef = useRef<HTMLDivElement>(null);
+    const autoSlideRef = useRef<NodeJS.Timeout | null>(null);
+    const sceneTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const userInterruptedRef = useRef(false);
+
     const keywords = WordService.getKeywords();
     const Images = ImageService.getGraphic2Image();
-    const totalImages = 6;
+    const totalImages = Images.length;
+    const REVEAL_INTERVAL = 2500;   // ms between keyword reveals
+    const SLIDE_INTERVAL  = 4000;   // ms auto-advance carousel
+    const INTERRUPT_BONUS = 6000;   // extra ms given when user taps nav
+    const SCENE_DELAY     = 3000;   // ms after last keyword before next scene
 
-    // ── image pulse animation (runs once on mount) ──
+    // ── image pulse ──
     useEffect(() => {
         let current = 0;
-
         const pulseNext = () => {
             if (current >= totalImages) {
                 setPulsingImg(null);
@@ -32,107 +36,197 @@ export default function GraphicMainComponent() {
             }
             setPulsingImg(current);
             current++;
-            // grow(300ms) + shrink(300ms) + gap(150ms) = 750ms per image
             setTimeout(pulseNext, 750);
         };
-
-        const startDelay = setTimeout(pulseNext, 400);
-        return () => clearTimeout(startDelay);
+        const t = setTimeout(pulseNext, 400);
+        return () => clearTimeout(t);
     }, []);
-// auto-scroll right panel when new keyword appears
-    useEffect(() => {
-        if (visibleKeywords.length === 0) return;
 
-        // on mobile the container scrolls, on desktop .right scrolls
-        const isMobile = window.innerWidth <= 1024;
-
-        if (isMobile && containerRef.current) {
-            containerRef.current.scrollTo({
-                top: containerRef.current.scrollHeight,
-                behavior: 'smooth',
-            });
-        } else if (rightRef.current) {
-            rightRef.current.scrollTo({
-                top: rightRef.current.scrollHeight,
-                behavior: 'smooth',
-            });
-        }
-    }, [visibleKeywords]);
-    // ── progressive keyword reveal (starts after image anim) ──
+    // ── progressive keyword reveal (after anim done) ──
     useEffect(() => {
         if (!animDone) return;
+        if (unlockedCount >= keywords.length) return;
 
-        if (progressIndex >= keywords.length) {
-            const timer = setTimeout(() => setScene("contentSummary"), 3000);
-            return () => clearTimeout(timer);
+        const t = setTimeout(() => {
+            setUnlockedCount(prev => prev + 1);
+            setActiveSlide(unlockedCount); // show newest revealed keyword
+        }, REVEAL_INTERVAL);
+
+        return () => clearTimeout(t);
+    }, [animDone, unlockedCount]);
+
+    // ── auto-advance carousel (once keywords start showing) ──
+    const resetAutoSlide = () => {
+        if (autoSlideRef.current) clearInterval(autoSlideRef.current);
+        autoSlideRef.current = setInterval(() => {
+            setActiveSlide(prev => {
+                const next = prev + 1;
+                if (next >= unlockedCount) return 0; // loop back
+                return next;
+            });
+        }, SLIDE_INTERVAL);
+    };
+
+    useEffect(() => {
+        if (unlockedCount === 0) return;
+        resetAutoSlide();
+        return () => { if (autoSlideRef.current) clearInterval(autoSlideRef.current); };
+    }, [unlockedCount]);
+
+    // ── scene transition after all keywords revealed ──
+    useEffect(() => {
+        if (unlockedCount < keywords.length) return;
+
+        const schedule = () => {
+            if (sceneTimerRef.current) clearTimeout(sceneTimerRef.current);
+            sceneTimerRef.current = setTimeout(() => {
+                setScene("contentSummary");
+            }, userInterruptedRef.current ? INTERRUPT_BONUS : SCENE_DELAY);
+        };
+
+        schedule();
+        return () => { if (sceneTimerRef.current) clearTimeout(sceneTimerRef.current); };
+    }, [unlockedCount]);
+
+    // ── manual nav ──
+    const canPrev = activeSlide > 0;
+    const canNext = activeSlide < unlockedCount - 1;
+
+    const scroll = (dir: 'prev' | 'next') => {
+        userInterruptedRef.current = true;
+
+        // reset scene timer to give extra time
+        if (sceneTimerRef.current) clearTimeout(sceneTimerRef.current);
+        if (unlockedCount >= keywords.length) {
+            sceneTimerRef.current = setTimeout(() => {
+                setScene("contentSummary");
+            }, INTERRUPT_BONUS);
         }
 
-        const timer = setTimeout(() => {
-            setVisibleKeywords(prev => [...prev, keywords[progressIndex]]);
-            setProgressIndex(prev => prev + 1);
-        }, 2500);
+        // reset auto-slide
+        resetAutoSlide();
 
-        return () => clearTimeout(timer);
-    }, [progressIndex, animDone]);
+        setActiveSlide(prev =>
+            dir === 'prev'
+                ? Math.max(0, prev - 1)
+                : Math.min(unlockedCount - 1, prev + 1)
+        );
+    };
+
+    const currentKeyword = keywords[activeSlide];
 
     return (
         <section className={styles.container} ref={containerRef}>
+
             {/* LEFT IMAGE GRID */}
             <div className={styles.leftGrid}>
+                <h4 className={styles.bodyText}>
+                    Watch Time Moving Through Our Little Responsibility...
+                </h4>
+                <p className={styles.kicker}>Rhulani</p>
                 <div className={styles.grid}>
                     {Images.map((src, i) => (
                         <motion.div
                             key={i}
                             className={`${styles.imgCell} ${animDone ? styles.imgCellDone : ''}`}
-                            animate={pulsingImg === i
-                                ? { scale: [1, 1.08, 1] }
-                                : { scale: 1 }
-                            }
+                            animate={pulsingImg === i ? { scale: [1, 1.08, 1] } : { scale: 1 }}
                             transition={pulsingImg === i
                                 ? { duration: 0.6, ease: 'easeInOut' }
                                 : { duration: 0.3 }
                             }
                         >
-                            <img
-                                src={src}
-                                alt=""
-                                aria-hidden="true"
-                                className={styles.imgFill}
-                            />
+                            <img src={src} alt="" aria-hidden className={styles.imgFill} />
                         </motion.div>
                     ))}
                 </div>
             </div>
 
-            {/* RIGHT TEXT AREA */}
-            <div className={styles.right}  ref={rightRef}>
-                <div className={styles.keywordGrid}>
-                <AnimatePresence>
-                    {visibleKeywords.map((item) => (
-                        <motion.div
-                            key={item.id}
-                            className={styles.keywordBlock}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, ease: 'easeOut' }}
-                        >
-                            <p className={styles.keywordLine}>
-                                <b>{item.keyword}</b>
-                                {' — '}
-                                {item.description}
-                            </p>
-                        </motion.div>
-                    ))}
-                </AnimatePresence></div>
+            {/* RIGHT — KEYWORD CAROUSEL */}
+            <div className={styles.right}>
+                {unlockedCount === 0 ? (
+                    <p className={styles.carouselWaiting}>
+                        watch the images first...
+                    </p>
+                ) : (
+                    <div className={styles.carousel}>
+
+                        {/* card */}
+                        <AnimatePresence mode="wait">
+                            {currentKeyword && (
+                                <motion.div
+                                    key={activeSlide}
+                                    className={styles.carouselCard}
+                                    initial={{ opacity: 0, x: 24 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -24 }}
+                                    transition={{ duration: 0.45, ease: 'easeInOut' }}
+                                >
+                                    <span className={styles.carouselIndex}>
+                                        {String(activeSlide + 1).padStart(2, '0')} /
+                                        {String(unlockedCount).padStart(2, '0')}
+                                    </span>
+                                    <p className={styles.carouselKeyword}>
+                                        {currentKeyword.keyword}
+                                    </p>
+                                    <p className={styles.carouselDesc}>
+                                        {currentKeyword.description}
+                                    </p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        {/* dots */}
+                        <div className={styles.carouselDots}>
+                            {Array.from({ length: unlockedCount }, (_, i) => (
+                                <button
+                                    key={i}
+                                    className={`${styles.carouselDot} ${i === activeSlide ? styles.carouselDotActive : ''}`}
+                                    onClick={() => {
+                                        setActiveSlide(i);
+                                        userInterruptedRef.current = true;
+                                        resetAutoSlide();
+                                        if (sceneTimerRef.current) clearTimeout(sceneTimerRef.current);
+                                        if (unlockedCount >= keywords.length) {
+                                            sceneTimerRef.current = setTimeout(
+                                                () => setScene("contentSummary"),
+                                                INTERRUPT_BONUS
+                                            );
+                                        }
+                                    }}
+                                    aria-label={`Slide ${i + 1}`}
+                                />
+                            ))}
+                        </div>
+
+                        {/* nav buttons */}
+                        <div className={styles.navButtons}>
+                            <button
+                                className={`${styles.navBtn} ${!canPrev ? styles.navBtnDisabled : ''}`}
+                                onClick={() => scroll('prev')}
+                                aria-label="Previous"
+                                disabled={!canPrev}
+                            >←</button>
+                            <button
+                                className={`${styles.navBtn} ${!canNext ? styles.navBtnDisabled : ''}`}
+                                onClick={() => scroll('next')}
+                                aria-label="Next"
+                                disabled={!canNext}
+                            >→</button>
+                        </div>
+                    </div>
+                )}
             </div>
+
             {/* BOTTOM */}
             <div className={styles.bottomTimer}>
                 still becoming something beautiful...
-                {/* ── ROW 3: music island ── */}
-                <MusicIslandComponent src={'/music/always.mp3'} artist={'Daniel Caeser'} title={'Always'} showIsland={true}/>
-
+                <MusicIslandComponent
+                    src="/music/always.mp3"
+                    artist="Daniel Caesar"
+                    title="Always"
+                    showIsland={true}
+                />
             </div>
-              
         </section>
     );
 }
