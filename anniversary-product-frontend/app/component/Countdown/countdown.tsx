@@ -9,6 +9,8 @@ import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScene } from '@/app/SceneContext';
 import MusicIslandComponent from '../music-component/music';
+import { Group, Loader,Text } from '@mantine/core';
+import { InfoIcon } from '@phosphor-icons/react';
 
 
 export default function CountDowncomponent() {
@@ -111,6 +113,16 @@ export default function CountDowncomponent() {
 
     const progress = formatTime(diffToStart);
 
+if (!progress) {
+    return (
+        <section className={styles.container} style={{ background: '#0a0a0a' }}>
+            <Group justify="center" align="center" style={{ height: '100vh', flexDirection: 'column', gap: '1rem' }}>
+                <Loader color="white" size="md" type="dots" />
+                <Text size="sm" c="dimmed">getting ready, Please wait...</Text>
+            </Group>
+        </section>
+    );
+}
     return (
         <AnimatePresence mode="wait">
             <motion.section
@@ -130,7 +142,7 @@ export default function CountDowncomponent() {
                             <h1 className={styles.title}>Time Together</h1>
 
                             <div className={styles.timer}>
-                                {progress.years > 0 && <div>{progress.years}y</div>}  {/* ✅ added */}
+                                {progress.years > 0 && <div>{progress.years}y</div>} 
                                 <div>{progress.days}d</div>
                                 <div>{progress.hours}h</div>
                                 <div>{progress.minutes}m</div>
@@ -163,7 +175,9 @@ export default function CountDowncomponent() {
                                 <div>{progress.minutes}m</div>
                                 <div>{progress.seconds}s</div>
                             </div>
-
+                            <div className={styles.swipeHint}>
+                               <InfoIcon/>  Tap to Play Music
+                            </div>
                             <div className={styles.swipeHint}>
                                 ↓ Swipe / Scroll to continue
                             </div>

@@ -5,6 +5,7 @@ import { useScene } from '@/app/SceneContext';
 import { ImageService, WordService } from '@/service/service';
 import { motion, AnimatePresence } from 'framer-motion';
 import MusicIslandComponent from '../music-component/music';
+import { SummaryService } from '@/service/summary.service';
 
 export default function GraphicMainComponent() {
     const { setScene } = useScene();
@@ -49,6 +50,11 @@ export default function GraphicMainComponent() {
         return () => clearTimeout(t);
     }, [animDone, keywords.length, unlockedCount]);
 
+    useEffect(() => {
+    if (animDone) {
+        SummaryService.getSummary().catch(() => {});
+        }
+    }, [animDone]);
     // ── manual nav ──
     const canPrev = activeSlide > 0;
     const canNext = activeSlide < unlockedCount - 1;

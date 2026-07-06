@@ -12,6 +12,7 @@ import { FaImages, FaVideo, FaChartLine } from "react-icons/fa";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { MdTrendingUp } from "react-icons/md";
 import MusicIslandComponent from '../music-component/music';
+import { Group, Loader,Text } from '@mantine/core';
 
 // bg colour + blob colours per slide
 const SLIDE_THEMES = [
@@ -71,11 +72,21 @@ export default function ContentSummaryComponent() {
         setTimeout(run, DURATIONS[0]);
     }, [stats, setScene]);
 
-    if (!stats) return null;
 
     const theme = SLIDE_THEMES[Math.min(step, SLIDE_THEMES.length - 1)];
     const totalSlides = 7; // slides 1–7 (step 0 = intro)
 
+
+if (!stats) {
+    return (
+        <section className={styles.container} style={{ background: '#0a0a0a' }}>
+            <Group justify="center" align="center" style={{ height: '100vh', flexDirection: 'column', gap: '1rem' }}>
+                <Loader color="white" size="md" type="dots" />
+                <Text size="sm" c="dimmed">get ready...</Text>
+            </Group>
+        </section>
+    );
+}
     return (
         <section
             className={styles.container}

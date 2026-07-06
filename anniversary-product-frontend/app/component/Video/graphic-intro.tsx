@@ -11,11 +11,15 @@ const PHASES = WordService.getPhases();
 
 const DURATIONS = [2200, 3800, 3800, 3800, 3800, 4500];
 
+const VIDEO_TIMEOUT_MS = 6000;
+
 export default function GraphicIntroComponent() {
     const { setScene } = useScene();
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [showButton, setShowButton] = useState(false);
     const [textPhase, setTextPhase] = useState(0);
+    const [videoFailed, setVideoFailed] = useState(false);
+    const fallbackTimerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         let cancelled = false;
@@ -25,13 +29,38 @@ export default function GraphicIntroComponent() {
                 setTextPhase(i);
                 await new Promise(r => setTimeout(r, DURATIONS[i]));
             }
-            if (!cancelled) setTextPhase(-1); // all done
+            if (!cancelled) setTextPhase(-1);
         };
         run();
         return () => { cancelled = true; };
     }, []);
 
+    // fallback timer — if video hasn't started playing after N seconds, show button
+    useEffect(() => {
+        fallbackTimerRef.current = setTimeout(() => {
+            setVideoFailed(true);
+            setShowButton(true);
+        }, VIDEO_TIMEOUT_MS);
+
+        return () => {
+            if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current);
+        };
+    }, []);
+
+    const handleVideoPlaying = () => {
+        // video started — cancel fallback timer
+        if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current);
+        setVideoFailed(false);
+    };
+
     const handleVideoEnd = () => setShowButton(true);
+
+    const handleVideoError = () => {
+        if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current);
+        setVideoFailed(true);
+        setShowButton(true);
+    };
+
     const goNext = () => setScene("graphicMain");
 
     const current = textPhase >= 0 ? PHASES[textPhase] : null;
@@ -45,20 +74,34 @@ export default function GraphicIntroComponent() {
             transition={{ duration: 1 }}
         >
             {/* background video */}
-            <video
-                ref={videoRef}
-                className={styles.video}
-                autoPlay
-                muted
-                playsInline
-                onEnded={handleVideoEnd}
-            >
-                <source src="/videos/a-year-time-lapse.mp4" type="video/mp4" />
-            </video>
+            {!videoFailed ? (
+                <video
+                    ref={videoRef}
+                    className={styles.video}
+                    autoPlay
+                    muted
+                    playsInline
+                    onPlaying={handleVideoPlaying}
+                    onEnded={handleVideoEnd}
+                    onError={handleVideoError}
+                    onStalled={handleVideoError}
+                >
+                    <source src="/videos/a-year-time-lapse.mp4" type="video/mp4" />
+                </video>
+            ) : (
+                // fallback background when video fails
+                <div className={styles.videoFallback} />
+            )}
 
             <div className={styles.overlay} />
-        {/* ── GLASS MUSIC ISLAND ── */}
-        <MusicIslandComponent src={'/music/good-days.mp3'} artist={'SZA'} title={'Good Days'} showIsland={false}/>
+
+            <MusicIslandComponent
+                src="/music/good-days.mp3"
+                artist="SZA"
+                title="Good Days"
+                showIsland={false}
+            />
+
             {/* text */}
             <div className={styles.left}>
                 <AnimatePresence mode="wait">
@@ -95,7 +138,6 @@ export default function GraphicIntroComponent() {
                     )}
                 </AnimatePresence>
 
-                {/* button — appears after video ends */}
                 <AnimatePresence>
                     {showButton && (
                         <motion.div
@@ -111,7 +153,12 @@ export default function GraphicIntroComponent() {
                             >
                                 →
                             </button>
-                            <p className={styles.navBtnLabel}>see what a year meant to me</p>
+                            <p className={styles.navBtnLabel}>
+                                {videoFailed
+                                    ? 'continue'
+                                    : 'see what a year meant to me'
+                                }
+                            </p>
                         </motion.div>
                     )}
                 </AnimatePresence>
